@@ -110,8 +110,11 @@
   
       <div class="col-md-3" [ngClass]="aplicaCssErro('endereco.estado')">
         <label for="estado" class="control-label">Estado</label>
-        <input type="text" class="form-control" id="estado"  formControlName="estado"
-          >
+        <select class="form-control" id="estado"  formControlName="estado"     >
+          <option *ngFor="let estado of estados | async" [value] = "estado.sigla"> {{estado.nome}}
+            
+          </option>
+        </select>
         <app-campo-control-erro 
           [mostrarErro]="verificaValidTouched('endereco.estado')" 
           msgErro="Estado é obrigatório.">
@@ -120,10 +123,60 @@
     </div>
   
   </div>
+
+  <div class="form-group">
+
+      <div class="col-md-3" >
+          <label for="cargo" class="control-label">Cargo</label>
+          <select class="form-control" id="cargo"  formControlName="cargo"     >
+            <option *ngFor="let cargo of cargos" [ngValue] = "cargo"> {{cargo.desc}}              
+            </option>
+          </select>         
+        </div>
+
+  
+
+
+  
+
+      <div class="col-md-3" >
+          <label for="tecnologias" class="control-label">Tecnologias</label>
+          <select multiple class="form-control" id="tecnologias"  formControlName="tecnologias"     >
+            <option *ngFor="let tecnologia of tecnologias" [value] = "tecnologia.nome"> {{tecnologia.desc}}              
+            </option>
+          </select>         
+        </div>
+
+        <div class="col-md-3" >
+            <label for="newsLetter" class="control-label">NewsLetter</label>
+            <div id="newsLetter"  class="row" *ngFor="let item of newsLetterOp" >
+                <div class="col-sm-4">
+                  <label class="radio-inline">
+                    <input type = "radio" [value]="item.valor" formControlName="newsLetter"/> {{item.desc}}               
+                  </label>
+                </div>
+            </div>            
+          </div>
+
+          
+
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-3" >
+      <div class = "checkbox">
+        <input type = "checkbox" formControlName="termos">Aceito os termos.
+      </div>
+    </div>
+  </div>
  
 
   <button type="submit" class="btn btn-primary" >Submit</button>
   <button class="btn" (click) = "resetar()">Cancelar</button>
+  <button class="btn-info" (click) = "setarCargo()">Cargo</button>
+  <button class="btn-info" (click) = "setarTecnologias()">Tecnologias</button>
+  <button class="btn-info" (click) = "setarNewsLetter()">NewsLetter</button>
+
 
   <app-form-debug [form]="formulario"></app-form-debug>
 </form>
